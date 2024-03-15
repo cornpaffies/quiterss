@@ -32,13 +32,13 @@ exists(.git) {
 }
 
 isEqual(QT_MAJOR_VERSION, 5) {
-  QT += widgets webkitwidgets network xml printsupport sql multimedia
+  QT += widgets webkitwidgets network xml printsupport sql multimedia webengine
   DEFINES += HAVE_QT5
   equals(WEBKIT_ALPHA, true) {
       DEFINES += WEBKIT_ALPHA
   }
 } else {
-  QT += core gui network xml webkit sql
+  QT += core gui network xml webkit sql webengine
   os2 {
     DISABLE_PHONON = 1
   }

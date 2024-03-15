@@ -21,11 +21,7 @@
 #include "VersionNo.h"
 
 #include <sqlite3.h>
-#ifdef HAVE_QT5
-#include <QWebPage>
-#else
-#include <qwebkitversion.h>
-#endif
+#include <qtwebengineversion.h>
 
 AboutDialog::AboutDialog(const QString &lang, QWidget *parent) :
   Dialog(parent, Qt::MSWindowsFixedSizeDialogHint)
@@ -53,8 +49,8 @@ AboutDialog::AboutDialog(const QString &lang, QWidget *parent) :
       + "<BR>"
       + tr("QuiteRSS is a open-source cross-platform RSS/Atom news reader")
       + "<P>" + tr("Includes:")
-      + QString(" Qt-%1, SQLite-%2, WebKit-%4").
-      arg(QT_VERSION_STR).arg(SQLITE_VERSION).arg(qWebKitVersion())
+      + QString(" Qt-%1, SQLite-%2, WebEngine-%4").
+      arg(QT_VERSION_STR).arg(SQLITE_VERSION).arg(QTWEBENGINE_VERSION_STR)
       + "</P>"
       + QString("<a href=\"%1\">%1</a>").arg("https://quiterss.org") +
       "<P>Copyright &copy; 2011-2021 QuiteRSS Team "
