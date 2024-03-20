@@ -20,16 +20,13 @@
 
 #define mainApp MainApplication::getInstance()
 
-#ifdef HAVE_QT5
 #include <QtWidgets>
-#else
-#include <QtGui>
-#endif
 #include <qtsingleapplication.h>
 #include <QNetworkDiskCache>
 #include <QLocale>
 #include <QLibraryInfo>
 #include <QNetworkProxy>
+#include <QWebEngineSettings>
 
 #include "cookiejar.h"
 #include "downloadmanager.h"

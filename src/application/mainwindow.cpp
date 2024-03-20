@@ -39,6 +39,7 @@
 #endif
 #include <QMainWindow>
 #include <QStatusBar>
+#include <QWebEngineProfile>
 #include <qzregexp.h>
 
 // ---------------------------------------------------------------------------
@@ -2004,46 +2005,46 @@ void MainWindow::loadSettings()
   notificationFontSize_ = settings.value("notificationFontSize", qApp->font().pointSize()).toInt();
 
   QString browserStandardFont = settings.value(
-        "browserStandardFont", QWebSettings::globalSettings()->fontFamily(QWebSettings::StandardFont)).toString();
+        "browserStandardFont", QWebEngineSettings::globalSettings()->fontFamily(QWebEngineSettings::StandardFont)).toString();
   QString browserFixedFont = settings.value(
-        "browserFixedFont", QWebSettings::globalSettings()->fontFamily(QWebSettings::FixedFont)).toString();
+        "browserFixedFont", QWebEngineSettings::globalSettings()->fontFamily(QWebEngineSettings::FixedFont)).toString();
   QString browserSerifFont = settings.value(
-        "browserSerifFont", QWebSettings::globalSettings()->fontFamily(QWebSettings::SerifFont)).toString();
+        "browserSerifFont", QWebEngineSettings::globalSettings()->fontFamily(QWebEngineSettings::SerifFont)).toString();
   QString browserSansSerifFont = settings.value(
-        "browserSansSerifFont", QWebSettings::globalSettings()->fontFamily(QWebSettings::SansSerifFont)).toString();
+        "browserSansSerifFont", QWebEngineSettings::globalSettings()->fontFamily(QWebEngineSettings::SansSerifFont)).toString();
   QString browserCursiveFont = settings.value(
-        "browserCursiveFont", QWebSettings::globalSettings()->fontFamily(QWebSettings::CursiveFont)).toString();
+        "browserCursiveFont", QWebEngineSettings::globalSettings()->fontFamily(QWebEngineSettings::CursiveFont)).toString();
   QString browserFantasyFont = settings.value(
-        "browserFantasyFont", QWebSettings::globalSettings()->fontFamily(QWebSettings::FantasyFont)).toString();
+        "browserFantasyFont", QWebEngineSettings::globalSettings()->fontFamily(QWebEngineSettings::FantasyFont)).toString();
   int browserDefaultFontSize = settings.value(
-        "browserDefaultFontSize", QWebSettings::globalSettings()->fontSize(QWebSettings::DefaultFontSize)).toInt();
+        "browserDefaultFontSize", QWebEngineSettings::globalSettings()->fontSize(QWebEngineSettings::DefaultFontSize)).toInt();
   int browserFixedFontSize = settings.value(
-        "browserFixedFontSize", QWebSettings::globalSettings()->fontSize(QWebSettings::DefaultFixedFontSize)).toInt();
+        "browserFixedFontSize", QWebEngineSettings::globalSettings()->fontSize(QWebEngineSettings::DefaultFixedFontSize)).toInt();
   int browserMinFontSize = settings.value(
-        "browserMinFontSize", QWebSettings::globalSettings()->fontSize(QWebSettings::MinimumFontSize)).toInt();
+        "browserMinFontSize", QWebEngineSettings::globalSettings()->fontSize(QWebEngineSettings::MinimumFontSize)).toInt();
   int browserMinLogFontSize = settings.value(
-        "browserMinLogFontSize", QWebSettings::globalSettings()->fontSize(QWebSettings::MinimumLogicalFontSize)).toInt();
+        "browserMinLogFontSize", QWebEngineSettings::globalSettings()->fontSize(QWebEngineSettings::MinimumLogicalFontSize)).toInt();
 
-  QWebSettings::globalSettings()->setFontFamily(
-        QWebSettings::StandardFont, browserStandardFont);
-  QWebSettings::globalSettings()->setFontFamily(
-        QWebSettings::FixedFont, browserFixedFont);
-  QWebSettings::globalSettings()->setFontFamily(
-        QWebSettings::SerifFont, browserSerifFont);
-  QWebSettings::globalSettings()->setFontFamily(
-        QWebSettings::SansSerifFont, browserSansSerifFont);
-  QWebSettings::globalSettings()->setFontFamily(
-        QWebSettings::CursiveFont, browserCursiveFont);
-  QWebSettings::globalSettings()->setFontFamily(
-        QWebSettings::FantasyFont, browserFantasyFont);
-  QWebSettings::globalSettings()->setFontSize(
-        QWebSettings::DefaultFontSize, browserDefaultFontSize);
-  QWebSettings::globalSettings()->setFontSize(
-        QWebSettings::DefaultFixedFontSize, browserFixedFontSize);
-  QWebSettings::globalSettings()->setFontSize(
-        QWebSettings::MinimumFontSize, browserMinFontSize);
-  QWebSettings::globalSettings()->setFontSize(
-        QWebSettings::MinimumLogicalFontSize, browserMinLogFontSize);
+  QWebEngineSettings::globalSettings()->setFontFamily(
+        QWebEngineSettings::StandardFont, browserStandardFont);
+  QWebEngineSettings::globalSettings()->setFontFamily(
+        QWebEngineSettings::FixedFont, browserFixedFont);
+  QWebEngineSettings::globalSettings()->setFontFamily(
+        QWebEngineSettings::SerifFont, browserSerifFont);
+  QWebEngineSettings::globalSettings()->setFontFamily(
+        QWebEngineSettings::SansSerifFont, browserSansSerifFont);
+  QWebEngineSettings::globalSettings()->setFontFamily(
+        QWebEngineSettings::CursiveFont, browserCursiveFont);
+  QWebEngineSettings::globalSettings()->setFontFamily(
+        QWebEngineSettings::FantasyFont, browserFantasyFont);
+  QWebEngineSettings::globalSettings()->setFontSize(
+        QWebEngineSettings::DefaultFontSize, browserDefaultFontSize);
+  QWebEngineSettings::globalSettings()->setFontSize(
+        QWebEngineSettings::DefaultFixedFontSize, browserFixedFontSize);
+  QWebEngineSettings::globalSettings()->setFontSize(
+        QWebEngineSettings::MinimumFontSize, browserMinFontSize);
+  QWebEngineSettings::globalSettings()->setFontSize(
+        QWebEngineSettings::MinimumLogicalFontSize, browserMinLogFontSize);
 
   updateFeedsEnable_ = settings.value("autoUpdatefeeds", false).toBool();
   updateFeedsInterval_ = settings.value("autoUpdatefeedsTime", 10).toInt();
@@ -2100,17 +2101,18 @@ void MainWindow::loadSettings()
   defaultZoomPages_ = settings.value("defaultZoomPages", 100).toInt();
   autoLoadImages_ = settings.value("autoLoadImages", true).toBool();
 
-  QWebSettings::globalSettings()->setAttribute(
-        QWebSettings::JavascriptEnabled, javaScriptEnable_);
-  QWebSettings::globalSettings()->setAttribute(
-        QWebSettings::PluginsEnabled, pluginsEnable_);
-  QWebSettings::globalSettings()->setMaximumPagesInCache(maxPagesInCache_);
-#ifdef WEBKIT_ALPHA
-  QWebSettings::globalSettings()->setAttribute(
-        QWebSettings::ErrorPageEnabled, false);
-#endif
-  QWebSettings::globalSettings()->setOfflineStorageDefaultQuota(0);
-  QWebSettings::globalSettings()->setOfflineStoragePath(mainApp->dataDir());
+  QWebEngineSettings::globalSettings()->setAttribute(
+        QWebEngineSettings::JavascriptEnabled, javaScriptEnable_);
+  QWebEngineSettings::globalSettings()->setAttribute(
+        QWebEngineSettings::PluginsEnabled, pluginsEnable_);
+  // TODO: Fix webengine page caching
+  //QWebSettings::globalSettings()->setMaximumPagesInCache(maxPagesInCache_);
+//#ifdef WEBKIT_ALPHA
+//  QWebEngineSettings::globalSettings()->setAttribute(
+//        QWebEngineSettings::ErrorPageEnabled, false);
+//#endif
+  //QWebSettings::globalSettings()->setOfflineStorageDefaultQuota(0);
+  //QWebSettings::globalSettings()->setOfflineStoragePath(mainApp->dataDir());
 
   soundNewNews_ = settings.value("soundNewNews", true).toBool();
   soundNotifyPath_ = settings.value("soundNotifyPath", mainApp->soundNotifyDefaultFile()).toString();
@@ -3522,25 +3524,25 @@ void MainWindow::showOptionDlg(int index)
 
   settings.beginGroup("Settings");
   QString browserStandardFont = settings.value(
-        "browserStandardFont", QWebSettings::globalSettings()->fontFamily(QWebSettings::StandardFont)).toString();
+        "browserStandardFont", QWebEngineSettings::globalSettings()->fontFamily(QWebEngineSettings::StandardFont)).toString();
   QString browserFixedFont = settings.value(
-        "browserFixedFont", QWebSettings::globalSettings()->fontFamily(QWebSettings::FixedFont)).toString();
+        "browserFixedFont", QWebEngineSettings::globalSettings()->fontFamily(QWebEngineSettings::FixedFont)).toString();
   QString browserSerifFont = settings.value(
-        "browserSerifFont", QWebSettings::globalSettings()->fontFamily(QWebSettings::SerifFont)).toString();
+        "browserSerifFont", QWebEngineSettings::globalSettings()->fontFamily(QWebEngineSettings::SerifFont)).toString();
   QString browserSansSerifFont = settings.value(
-        "browserSansSerifFont", QWebSettings::globalSettings()->fontFamily(QWebSettings::SansSerifFont)).toString();
+        "browserSansSerifFont", QWebEngineSettings::globalSettings()->fontFamily(QWebEngineSettings::SansSerifFont)).toString();
   QString browserCursiveFont = settings.value(
-        "browserCursiveFont", QWebSettings::globalSettings()->fontFamily(QWebSettings::CursiveFont)).toString();
+        "browserCursiveFont", QWebEngineSettings::globalSettings()->fontFamily(QWebEngineSettings::CursiveFont)).toString();
   QString browserFantasyFont = settings.value(
-        "browserFantasyFont", QWebSettings::globalSettings()->fontFamily(QWebSettings::FantasyFont)).toString();
+        "browserFantasyFont", QWebEngineSettings::globalSettings()->fontFamily(QWebEngineSettings::FantasyFont)).toString();
   int browserDefaultFontSize = settings.value(
-        "browserDefaultFontSize", QWebSettings::globalSettings()->fontSize(QWebSettings::DefaultFontSize)).toInt();
+        "browserDefaultFontSize", QWebEngineSettings::globalSettings()->fontSize(QWebEngineSettings::DefaultFontSize)).toInt();
   int browserFixedFontSize = settings.value(
-        "browserFixedFontSize", QWebSettings::globalSettings()->fontSize(QWebSettings::DefaultFixedFontSize)).toInt();
+        "browserFixedFontSize", QWebEngineSettings::globalSettings()->fontSize(QWebEngineSettings::DefaultFixedFontSize)).toInt();
   int browserMinFontSize = settings.value(
-        "browserMinFontSize", QWebSettings::globalSettings()->fontSize(QWebSettings::MinimumFontSize)).toInt();
+        "browserMinFontSize", QWebEngineSettings::globalSettings()->fontSize(QWebEngineSettings::MinimumFontSize)).toInt();
   int browserMinLogFontSize = settings.value(
-        "browserMinLogFontSize", QWebSettings::globalSettings()->fontSize(QWebSettings::MinimumLogicalFontSize)).toInt();
+        "browserMinLogFontSize", QWebEngineSettings::globalSettings()->fontSize(QWebEngineSettings::MinimumLogicalFontSize)).toInt();
   settings.endGroup();
 
   optionsDialog_->browserStandardFont_->setCurrentFont(QFont(browserStandardFont));
@@ -3820,11 +3822,11 @@ void MainWindow::showOptionDlg(int index)
   maxPagesInCache_ = optionsDialog_->maxPagesInCache_->value();
   defaultZoomPages_ = optionsDialog_->defaultZoomPages_->value();
 
-  QWebSettings::globalSettings()->setAttribute(
-        QWebSettings::JavascriptEnabled, javaScriptEnable_);
-  QWebSettings::globalSettings()->setAttribute(
-        QWebSettings::PluginsEnabled, pluginsEnable_);
-  QWebSettings::globalSettings()->setMaximumPagesInCache(maxPagesInCache_);
+  QWebEngineSettings::globalSettings()->setAttribute(
+        QWebEngineSettings::JavascriptEnabled, javaScriptEnable_);
+  QWebEngineSettings::globalSettings()->setAttribute(
+        QWebEngineSettings::PluginsEnabled, pluginsEnable_);
+  //QWebEngineSettings::globalSettings()->setMaximumPagesInCache(maxPagesInCache_);
 
   settings.beginGroup("Settings");
 
@@ -3974,26 +3976,26 @@ void MainWindow::showOptionDlg(int index)
   browserMinFontSize = optionsDialog_->browserMinFontSize_->value();
   browserMinLogFontSize = optionsDialog_->browserMinLogFontSize_->value();
 
-  QWebSettings::globalSettings()->setFontFamily(
-        QWebSettings::StandardFont, browserStandardFont);
-  QWebSettings::globalSettings()->setFontFamily(
-        QWebSettings::FixedFont, browserFixedFont);
-  QWebSettings::globalSettings()->setFontFamily(
-        QWebSettings::SerifFont, browserSerifFont);
-  QWebSettings::globalSettings()->setFontFamily(
-        QWebSettings::SansSerifFont, browserSansSerifFont);
-  QWebSettings::globalSettings()->setFontFamily(
-        QWebSettings::CursiveFont, browserCursiveFont);
-  QWebSettings::globalSettings()->setFontFamily(
-        QWebSettings::FantasyFont, browserFantasyFont);
-  QWebSettings::globalSettings()->setFontSize(
-        QWebSettings::DefaultFontSize, browserDefaultFontSize);
-  QWebSettings::globalSettings()->setFontSize(
-        QWebSettings::DefaultFixedFontSize, browserFixedFontSize);
-  QWebSettings::globalSettings()->setFontSize(
-        QWebSettings::MinimumFontSize, browserMinFontSize);
-  QWebSettings::globalSettings()->setFontSize(
-        QWebSettings::MinimumLogicalFontSize, browserMinLogFontSize);
+  QWebEngineSettings::globalSettings()->setFontFamily(
+        QWebEngineSettings::StandardFont, browserStandardFont);
+  QWebEngineSettings::globalSettings()->setFontFamily(
+        QWebEngineSettings::FixedFont, browserFixedFont);
+  QWebEngineSettings::globalSettings()->setFontFamily(
+        QWebEngineSettings::SerifFont, browserSerifFont);
+  QWebEngineSettings::globalSettings()->setFontFamily(
+        QWebEngineSettings::SansSerifFont, browserSansSerifFont);
+  QWebEngineSettings::globalSettings()->setFontFamily(
+        QWebEngineSettings::CursiveFont, browserCursiveFont);
+  QWebEngineSettings::globalSettings()->setFontFamily(
+        QWebEngineSettings::FantasyFont, browserFantasyFont);
+  QWebEngineSettings::globalSettings()->setFontSize(
+        QWebEngineSettings::DefaultFontSize, browserDefaultFontSize);
+  QWebEngineSettings::globalSettings()->setFontSize(
+        QWebEngineSettings::DefaultFixedFontSize, browserFixedFontSize);
+  QWebEngineSettings::globalSettings()->setFontSize(
+        QWebEngineSettings::MinimumFontSize, browserMinFontSize);
+  QWebEngineSettings::globalSettings()->setFontSize(
+        QWebEngineSettings::MinimumLogicalFontSize, browserMinLogFontSize);
 
   settings.beginGroup("Settings");
   settings.setValue("browserStandardFont", browserStandardFont);
