@@ -2105,14 +2105,10 @@ void MainWindow::loadSettings()
         QWebEngineSettings::JavascriptEnabled, javaScriptEnable_);
   QWebEngineSettings::globalSettings()->setAttribute(
         QWebEngineSettings::PluginsEnabled, pluginsEnable_);
-  // TODO: Fix webengine page caching
+  // TODO: Test webengine page caching
   //QWebSettings::globalSettings()->setMaximumPagesInCache(maxPagesInCache_);
-//#ifdef WEBKIT_ALPHA
-//  QWebEngineSettings::globalSettings()->setAttribute(
-//        QWebEngineSettings::ErrorPageEnabled, false);
-//#endif
   //QWebSettings::globalSettings()->setOfflineStorageDefaultQuota(0);
-  //QWebSettings::globalSettings()->setOfflineStoragePath(mainApp->dataDir());
+  QWebEngineProfile::defaultProfile()->setPersistentStoragePath(mainApp->dataDir());
 
   soundNewNews_ = settings.value("soundNewNews", true).toBool();
   soundNotifyPath_ = settings.value("soundNotifyPath", mainApp->soundNotifyDefaultFile()).toString();
